@@ -7,9 +7,9 @@ elif [ "$(uname)" == "Darwin" ]; then
 fi
 
 export PATH=$PATH:/sbin:/usr/sbin
-export PATH=$PATH:/home/sueda/.pyenv/bin:/home/sueda/.pyenv/shims
+export PATH=$PATH:$HOME/.pyenv/bin:$HOME/.pyenv/shims
 export PATH=$PATH:/usr/lib/go-1.10/bin
-export PATH=$PATH:/home/sueda/dev/utils
+export PATH=$PATH:$HOME/dev/utils
 
 export GOPATH="~/dev/go"
 export PATH="$PATH:$GOPATH/bin"
