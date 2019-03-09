@@ -2,8 +2,9 @@ PS1=" \[\e[32m\]\W\[\e[0m\] \$ "
 
 if [ "$(uname)" == "Linux" ]; then
     export DISPLAY=:0
+    colorize="--color=auto"
 elif [ "$(uname)" == "Darwin" ]; then
-    echo
+    colorize="-G"
 fi
 
 export PATH=$PATH:/sbin:/usr/sbin
@@ -63,7 +64,7 @@ function calc() {
 }
 
 function c() {
-    fancy='ls -CF --color=auto'
+    fancy="ls -CF ${colorize}"
     if [ -z "$1" ]; then
         cd ..
         $fancy
@@ -159,11 +160,11 @@ __reg_git_alias gst status
 __reg_git_alias gt tag
 alias g="git" && __git_complete g _git
 
-alias l="ls -CF --color=auto"
-alias ls="ls -CF --color=auto"
+alias l="ls -CF ${colorize}"
+alias ls="ls -CF ${colorize}"
 alias sl="ls"
-alias ll="ls -lh --color=auto"
-alias la="ls -lah --color=auto"
+alias ll="ls -lh ${colorize}"
+alias la="ls -lah ${colorize}"
 alias s='ls'
 alias lg='ls | ag'
 
