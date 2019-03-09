@@ -1,3 +1,6 @@
+unbind -t vi-copy Space
+bind-key -t vi-copy v begin-selection
+
 bind-key -t vi-copy y copy-pipe "xsel -ip && xsel -op | xsel -ib"
 bind-key p run "xsel -o --clipboard | tmux load-buffer - && tmux paste-buffer"
 
