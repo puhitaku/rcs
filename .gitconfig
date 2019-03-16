@@ -1,0 +1,7 @@
+# This is Git's per-user configuration file.
+[user]
+	name = Takumi Sueda
+	email = puhitaku@gmail.com
+[pager]
+	branch = cat
+
