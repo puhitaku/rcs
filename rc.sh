@@ -12,7 +12,7 @@ export PATH=$PATH:$HOME/.pyenv/bin:$HOME/.pyenv/shims
 export PATH=$PATH:/usr/lib/go-1.10/bin
 export PATH=$PATH:$HOME/dev/utils
 
-export GOPATH="~/dev/go"
+export GOPATH="${HOME}/dev/go"
 export PATH="$PATH:$GOPATH/bin"
 
 export LC_ALL="en_US.UTF-8"
