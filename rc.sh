@@ -85,9 +85,9 @@ function gocd() {
 function ttyusb() {
     if [ -n "$1" ]; then
         if [ -n "$2" ]; then
-            sudo minicom -D /dev/ttyUSB${1} -b ${2}
+            sudo minicom -c on -D /dev/ttyUSB${1} -b ${2}
         else
-            sudo minicom -D /dev/ttyUSB${1} -b 115200
+            sudo minicom -c on -D /dev/ttyUSB${1} -b 115200
         fi
     else
         ls /dev/ttyUSB*
@@ -197,6 +197,7 @@ alias rename='tmux rename-window'
 alias dk='docker'
 alias umount='sudo umount'
 alias ha='history | ag -o '\''^\s+[0-9]+\s+\K.*'\'' |  peco --layout=bottom-up | pbcopy'
+alias minicom='minicom -c on'
 
 alias sourcerc='source ~/.bashrc'
 
