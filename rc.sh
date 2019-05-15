@@ -171,6 +171,8 @@ alias lg='ls | ag'
 alias cl='clear'
 alias cls='clear && s'
 
+alias agc='ag --color'
+
 alias fa='find . 2>/dev/null | ag'
 alias fp='find . | peco'
 
