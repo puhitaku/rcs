@@ -1,0 +1,15 @@
+# Place this at /etc/default/keyboard
+# and run `sudo dpkg-reconfigure -phigh console-setup`
+# https://lambdalisue.hatenablog.com/entry/2013/09/27/212118
+
+# KEYBOARD CONFIGURATION FILE
+
+# Consult the keyboard(5) manual page.
+
+XKBMODEL="pc105"
+XKBLAYOUT="us"
+XKBVARIANT=""
+XKBOPTIONS=""
+
+BACKSPACE="guess"
+XKBOPTIONS="ctrl:nocaps"
