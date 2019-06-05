@@ -1,0 +1,5 @@
+set show-mode-in-prompt on
+
+# reduce tmux escape delay
+set keyseq-timeout 1
+
