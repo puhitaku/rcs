@@ -8,8 +8,8 @@ fi
 linux=$(uname | grep -q Linux && echo 0)
 mac=$(uname | grep -q Darwin && echo 0)
 
-which curl || sudo apt install curl
-which pyenv || curl https://pyenv.run | bash
+which curl > /dev/null || sudo apt install curl
+which pyenv > /dev/null || curl https://pyenv.run | bash
 
 ln -s $(pwd)/rc.sh ~/rc.sh
 ln -s $(pwd)/.tmux.conf ~/.tmux.conf
