@@ -211,3 +211,7 @@ if [ -f ~/custom.sh ]; then
     source ~/custom.sh
 fi
 
+if [ -f ~/wrttool.sh ]; then
+    source ~/wrttool.sh
+fi
+
