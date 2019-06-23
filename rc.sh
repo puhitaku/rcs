@@ -127,13 +127,6 @@ function addr2line2vi() {
 
 # Git aliases
 
-if [ -f ~/git-completion.bash ]; then
-    source ~/git-completion.bash
-else
-    echo "Warning: git-completion.bash not installed. Downloading."
-    curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash > ~/git-completion.bash
-fi
-
 function __reg_git_alias() {
     __git_complete $1 _git_$2
     if [ -z "$3" ]; then
@@ -143,22 +136,37 @@ function __reg_git_alias() {
     fi
 }
 
-__reg_git_alias ga add
-__reg_git_alias gap add 'add --patch'
-__reg_git_alias gb branch
-__reg_git_alias gc commit
-__reg_git_alias gcam commit 'commit --amend -m'
-__reg_git_alias gcm commit 'commit -m'
-__reg_git_alias gco checkout
-__reg_git_alias gd diff
-__reg_git_alias gf fetch
-__reg_git_alias gl log
-__reg_git_alias gp push
-__reg_git_alias gpo push 'push origin'
-__reg_git_alias gr rebase
-__reg_git_alias gst status
-__reg_git_alias gt tag
-alias g="git" && __git_complete g _git
+if [ -f ~/git-completion.bash ]; then
+    source ~/git-completion.bash
+    __git_complete g _git
+    __reg_git_alias ga add
+    __reg_git_alias gap add 'add --patch'
+    __reg_git_alias gb branch
+    __reg_git_alias gc commit
+    __reg_git_alias gcam commit 'commit --amend -m'
+    __reg_git_alias gcm commit 'commit -m'
+    __reg_git_alias gco checkout
+    __reg_git_alias gd diff
+    __reg_git_alias gf fetch
+    __reg_git_alias gl log
+    __reg_git_alias gp push
+    __reg_git_alias gpo push 'push origin'
+    __reg_git_alias gr rebase
+    __reg_git_alias gst status
+    __reg_git_alias gt tag
+else
+    echo "Warning: git-completion.bash not installed"
+    which curl > /dev/null
+    if [ $? -ne 0 ]; then
+        echo "Fatal: please install curl and restart this shell"
+    else
+        curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash > ~/git-completion.bash
+        echo "Info: succeeded to download git-completion"
+        echo "Info: restart this shell"
+    fi
+fi
+
+alias g="git"
 
 alias l="ls -CF ${colorize}"
 alias ls="ls -CF ${colorize}"
