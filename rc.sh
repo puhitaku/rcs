@@ -7,6 +7,10 @@ elif [ "$(uname)" == "Darwin" ]; then
     colorize="-G"
 fi
 
+if [ "${SSH_CLIENT}" != "" ] || [ "${SSH_TTY}" != "" ]; then
+    unset DISPLAY
+fi
+
 export PATH=$PATH:/sbin:/usr/sbin
 export PATH=$PATH:$HOME/.pyenv/bin:$HOME/.pyenv/shims
 export PATH=$PATH:$HOME/.poetry/bin
