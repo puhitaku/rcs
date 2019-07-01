@@ -129,6 +129,14 @@ function addr2line2vi() {
     vi +$line $fn
 }
 
+function sshcp() {
+    if [ $# -ne 3 ]; then
+        echo "usage: sshcp FILEPATH [USER@]HOST OUTPATH"
+        return 1
+    fi
+    cat $1 | ssh $2 "cat > $3"
+}
+
 # Git aliases
 
 function __reg_git_alias() {
