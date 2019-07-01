@@ -86,16 +86,26 @@ function gocd() {
     fi
 }
 
-function ttyusb() {
+function _ttyhoge() {
     if [ -n "$1" ]; then
         if [ -n "$2" ]; then
-            sudo minicom -c on -D /dev/ttyUSB${1} -b ${2}
+            sudo minicom -c on -D /dev/${devpref}${1} -b ${2}
         else
-            sudo minicom -c on -D /dev/ttyUSB${1} -b 115200
+            sudo minicom -c on -D /dev/${devpref}${1} -b 115200
         fi
     else
-        ls /dev/ttyUSB*
+        ls /dev/${devpref}*
     fi
+}
+
+function ttyusb() {
+    devpref=ttyUSB
+    _ttyhoge $@
+}
+
+function ttyacm() {
+    devpref=ttyACM
+    _ttyhoge $@
 }
 
 function recoverdev() {
