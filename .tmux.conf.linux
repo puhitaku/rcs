@@ -12,10 +12,6 @@ if-shell -b '[ "$(echo "$TMUX_VERSION < 2.1" | bc)" = 1 ]' " \
 if-shell -b '[ "$(echo "$TMUX_VERSION >= 2.1" | bc)" = 1 ]' " \
     set -g mouse on"
 
-# UTF8 is autodetected in 2.2 onwards, but errors if explicitly set
-if-shell -b '[ "$(echo "$TMUX_VERSION < 2.2" | bc)" = 1 ]' \
-  "set -g utf8 on; set -g status-utf8 on; set -g mouse-utf8 on"
-
 # bind-key syntax changed in 2.4 -- selection / copy / paste
 if-shell -b '[ "$(echo "$TMUX_VERSION < 2.4" | bc)" = 1 ]' " \
     foo \
