@@ -21,7 +21,7 @@ if-shell -b '[ "$(echo "$TMUX_VERSION < 2.4" | bc)" = 1 ]' " \
     bind-key -t vi-copy y copy-pipe 'xsel -ip && xsel -op | xsel -ib'"
 
 # Newer versions
-if-shell -b '[ "$(echo "$TMUX_VERSION < 2.9" | bc)" = 1 ]' " \
+if-shell -b '[ "$(echo "2.3 < $TMUX_VERSION" | bc)" = 1 ]' " \
     unbind -T copy-mode-vi Space; \
     bind-key -T copy-mode-vi v   send -X begin-selection; \
     bind-key -T copy-mode-vi V   send -X select-line; \
