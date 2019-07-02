@@ -1,4 +1,4 @@
-if-shell -b '[ "$(which bc)" != "" ]' " \
+if-shell -b '[ "$(which bc)" == "" ]' " \
     set -g status-left-length 30; \
     set -g status-left 'INSTALL BC FIRST!!!  '"
 
