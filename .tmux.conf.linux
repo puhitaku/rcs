@@ -18,7 +18,7 @@ if-shell -b '[ "$(echo "$TMUX_VERSION < 2.4" | bc)" = 1 ]' " \
     bind-key -t vi-copy v   begin-selection; \
     bind-key -t vi-copy V   send -X select-line; \
     bind-key -t vi-copy C-v rectangle-toggle; \
-    bind-key -t vi-copy y copy-pipe 'xsel -ip && xsel -op | xsel -ib'"
+    bind-key -t vi-copy y   copy-pipe 'xsel -ip && xsel -op | xsel -ib'"
 
 # Newer versions
 if-shell -b '[ "$(echo "2.3 < $TMUX_VERSION" | bc)" = 1 ]' " \
