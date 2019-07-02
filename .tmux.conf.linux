@@ -14,7 +14,6 @@ if-shell -b '[ "$(echo "$TMUX_VERSION >= 2.1" | bc)" = 1 ]' " \
 
 # bind-key syntax changed in 2.4 -- selection / copy / paste
 if-shell -b '[ "$(echo "$TMUX_VERSION < 2.4" | bc)" = 1 ]' " \
-    foo \
     unbind -t vi-copy Space; \
     bind-key -t vi-copy v   begin-selection; \
     bind-key -t vi-copy V   send -X select-line; \
