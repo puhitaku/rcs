@@ -14,7 +14,7 @@ fi
 export PATH=$PATH:/sbin:/usr/sbin
 export PATH=$PATH:$HOME/.pyenv/bin:$HOME/.pyenv/shims
 export PATH=$PATH:$HOME/.poetry/bin
-export PATH=$PATH:/usr/lib/go-1.10/bin
+export PATH=$PATH:/usr/lib/go-1.11/bin
 
 export GOPATH="${HOME}/dev/go"
 export PATH="$PATH:$GOPATH/bin"
