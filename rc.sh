@@ -4,6 +4,7 @@ if [ "$(uname)" == "Linux" ]; then
     export DISPLAY=:0
     colorize="--color=auto"
 elif [ "$(uname)" == "Darwin" ]; then
+    complete -W "\`grep -oE '^[a-zA-Z0-9_.-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9_.-]*$//'\`" make
     colorize="-G"
 fi
 
