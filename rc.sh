@@ -41,6 +41,16 @@ fi
 
 export LESS='-R'
 
+saver() {
+    while [ 1 ]; do
+        timeout 1m cmatrix -b
+        sleep 0.5
+        timeout 1m nyancat -ns
+        sleep 0.5
+    done
+    clear
+}
+
 memo() {
     vim $(date +%y%m%d)_$1.md
 }
