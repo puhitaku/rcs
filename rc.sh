@@ -156,7 +156,11 @@ function sshcp() {
         echo "usage: sshcp FILEPATH [USER@]HOST OUTPATH"
         return 1
     fi
-    cat $1 | ssh $2 "cat > $3"
+    if [ "$PORT" == "" ]; then
+        cat $1 | gzip | ssh $2 "cat | gzip -d > $3"
+    else
+        cat $1 | gzip | ssh -p $PORT $2 "cat | gzip -d > $3"
+    fi
 }
 
 # Git aliases
