@@ -194,6 +194,7 @@ if [ -f ~/git-completion.bash ]; then
     __reg_git_alias gpo push 'push origin'
     __reg_git_alias gr rebase
     __reg_git_alias gst status
+    __reg_git_alias gs status
     __reg_git_alias gt tag
 else
     echo "Warning: git-completion.bash not installed"
