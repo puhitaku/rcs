@@ -26,3 +26,6 @@ ln -s $(pwd)/.vimrc ~/.vimrc
 ln -s $(pwd)/.gitconfig ~/.gitconfig
 ln -s $(pwd)/.inputrc ~/.inputrc
 
+mkdir -p ~/.config/kitty/
+ln -s $(pwd)/kitty.conf ~/.config/kitty/kitty.conf
+
