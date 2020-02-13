@@ -251,6 +251,14 @@ alias umount='sudo umount'
 alias ha='history | ag -o '\''^\s+[0-9]+\s+\K.*'\'' |  peco --layout=bottom-up | pbcopy'
 alias minicom='minicom -c on'
 
+# systemd etc.
+alias nec='networkctl'
+alias syc='systemctl'
+alias joc='journalctl'
+
+# enable alias expansion for sudo
+alias sudo='sudo '
+
 alias sourcerc='source ~/.bashrc'
 
 if [ "$(pwd)" == "${HOME}" ]; then
