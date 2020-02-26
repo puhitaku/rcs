@@ -192,6 +192,7 @@ if [ -f ~/git-completion.bash ]; then
     __reg_git_alias gl log
     __reg_git_alias gp push
     __reg_git_alias gpo push 'push origin'
+    __reg_git_alias gposu push 'push origin --set-upstream'
     __reg_git_alias gr rebase
     __reg_git_alias gst status
     __reg_git_alias gs status
