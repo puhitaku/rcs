@@ -252,7 +252,7 @@ alias dk='docker'
 alias umount='sudo umount'
 alias ha='history | ag -o '\''^\s+[0-9]+\s+\K.*'\'' |  peco --layout=bottom-up | pbcopy'
 alias minicom='minicom -c on'
-alias now='date --iso-8601=seconds'
+alias now='date -u +"%Y-%m-%dT%H:%M:%SZ"'
 
 # systemd etc.
 alias nec='networkctl'
