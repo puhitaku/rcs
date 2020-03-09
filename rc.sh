@@ -187,6 +187,7 @@ if [ -f ~/git-completion.bash ]; then
     __reg_git_alias gcm commit 'commit -m'
     __reg_git_alias gco checkout
     __reg_git_alias gcop checkout 'checkout --patch'
+    __reg_git_alias gcob checkout 'checkout -b'
     __reg_git_alias gd diff
     __reg_git_alias gf fetch
     __reg_git_alias gl log
