@@ -1,0 +1,26 @@
+{
+    "slack_token": "Follow the instruction <https://github.com/erroneousboat/slack-term/wiki> to get your token",
+    "sidebar_width": 2,
+    "notify": "mention",
+    "emoji": true,
+	"theme": {
+        "view": {
+            "fg": "white",
+            "bg": "default",
+            "border_fg": "white",
+            "border_bg": "default",
+            "label_fg": "white"
+        },
+        "channel": {
+            "prefix": "",
+            "icon": "",
+            "text": ""
+        },
+        "message": {
+            "time_format": "01/02 15:04",
+            "time": "fg-blue",
+            "name": "fg-green",
+            "text": ""
+        }
+    }
+}
