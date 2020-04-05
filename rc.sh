@@ -273,7 +273,7 @@ alias joc='journalctl'
 # enable alias expansion for sudo
 alias sudo='sudo '
 
-alias editrc='vim ~/rc.sh'
+alias editrc='vim ~/dev/rcs/rc.sh'
 alias sourcerc='source ~/.bashrc'
 
 if [ "$(pwd)" == "${HOME}" ]; then
