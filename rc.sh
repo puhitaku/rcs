@@ -165,6 +165,16 @@ function sshcp() {
     fi
 }
 
+function slackterm() {
+    if [ $# -ne 1 ]; then
+        slack-term -config ${HOME}/.config/slack-term/config.json
+    else
+        CONF="${HOME}/.config/slack-term/$1.json"
+        echo "Configuration: ${CONF}"
+        slack-term -config ${CONF}
+    fi
+}
+
 # Git aliases
 
 function __reg_git_alias() {
