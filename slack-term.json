@@ -9,7 +9,7 @@
             "bg": "default",
             "border_fg": "white",
             "border_bg": "default",
-            "label_fg": "white"
+            "label_fg": "white,bold"
         },
         "channel": {
             "prefix": "",
@@ -20,7 +20,7 @@
             "time_format": "01/02 15:04",
             "time": "fg-blue",
             "name": "fg-green",
-            "text": ""
+            "text": "fg-white,bold"
         }
     }
 }
