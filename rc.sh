@@ -176,6 +176,7 @@ function slackterm() {
 }
 
 # Git aliases
+alias g="git"
 
 function __reg_git_alias() {
     __git_complete $1 _git_$2
@@ -220,8 +221,6 @@ else
     fi
 fi
 
-alias g="git"
-
 alias l="ls -CF ${colorize}"
 alias ls="ls -CF ${colorize}"
 alias sl="ls"
@@ -237,6 +236,8 @@ alias agc='ag --color'
 
 alias fa='find . 2>/dev/null | ag'
 alias fp='find . | peco'
+
+alias ca='cat'
 
 alias le='less'
 alias he='head -n20'
@@ -255,20 +256,29 @@ alias いpyてょn='ipython'
 alias venv='python -m venv'
 
 alias copy='xsel -ip && xsel -op | xsel -ib'
-alias ca='cat'
 alias du1='du -hd 1'
-alias rename='tmux rename-window'
-alias dk='docker'
 alias umount='sudo umount'
-alias ha='history | ag -o '\''^\s+[0-9]+\s+\K.*'\'' |  peco --layout=bottom-up | pbcopy'
+alias ha='history | ag -o '\''^\s+[0-9]+\s+\K.*'\'' | uniq | tail -r | peco --layout=bottom-up | pbcopy'
+alias has='history | ag -o '\''^\s+[0-9]+\s+\K.*'\'' | sort | uniq | tail -r | peco --layout=bottom-up | pbcopy'
 alias minicom='minicom -c on'
-alias now='date +"%Y-%m-%d %A %H:%M:%S"'
+
+alias nowjst='date +"%Y-%m-%d %A %H:%M:%S"'
 alias nowutc='date -u +"%Y-%m-%dT%H:%M:%SZ"'
+
+alias rename='tmux rename-window'
+
+# docker
+alias dk='docker'
+alias dkprune='yes | docker image prune'
 
 # systemd etc.
 alias nec='networkctl'
 alias syc='systemctl'
 alias joc='journalctl'
+
+# AWS
+alias s3='aws s3'
+alias cloudformation='aws cloudformation'
 
 # enable alias expansion for sudo
 alias sudo='sudo '
