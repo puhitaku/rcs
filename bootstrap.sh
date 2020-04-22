@@ -12,7 +12,8 @@ which curl > /dev/null || sudo apt install curl
 which pyenv > /dev/null || curl https://pyenv.run | bash
 
 mkdir -p ~/dev/awsprof
-curl https://gist.githubusercontent.com/puhitaku/d6f3284107abead3ad9f/raw/842b87983d7e11c6c892e4a9900a8a2828c1deac/awsprof.py > ~/dev/awsprof
+curl https://gist.githubusercontent.com/puhitaku/d6f3284107abead3ad9f/raw/842b87983d7e11c6c892e4a9900a8a2828c1deac/awsprof.py > ~/dev/awsprof/awsprof
+chmod +x ~/dev/awsprof/awsprof
 
 ln -s $(pwd)/rc.sh ~/rc.sh
 ln -s $(pwd)/.tmux.conf ~/.tmux.conf
