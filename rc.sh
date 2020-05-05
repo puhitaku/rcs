@@ -123,6 +123,13 @@ function ttyacm() {
     _ttyhoge $@
 }
 
+function byerootfs() {
+    sudo umount $1/proc
+    sudo umount $1/dev/pts
+    sudo umount $1/dev
+    sudo umount $1/sys
+}
+
 function recoverdev() {
     sudo rm -f /dev/null /dev/zero /dev/random /dev/urandom
     sudo /bin/mknod -m 0666 /dev/random c 1 8
