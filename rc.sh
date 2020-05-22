@@ -26,6 +26,8 @@ export PATH="$PATH:$GOPATH/bin"
 
 export LC_ALL="en_US.UTF-8"
 
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
 set -o vi
 
 # pyenv
