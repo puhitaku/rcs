@@ -2,7 +2,7 @@ syntax enable
 
 set autoindent
 set backspace=indent,eol,start
-set clipboard+=unnamedplus
+set clipboard=unnamed,unnamedplus
 set expandtab
 set hlsearch
 set incsearch
