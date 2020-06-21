@@ -19,7 +19,7 @@ export PATH=$PATH:$HOME/.poetry/bin
 export PATH=$PATH:/usr/lib/go-1.11/bin
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.local/kitty.app/bin
-export PATH=$PATH:$HOME/dev/awsprof
+export PATH=$PATH:$RCS_DIR/scripts
 
 export GO111MODULE=auto
 export GOPATH="${HOME}/dev/go"

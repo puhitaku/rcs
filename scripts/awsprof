@@ -1,0 +1,48 @@
+#!/usr/bin/python3
+
+from __future__ import print_function, unicode_literals
+from textwrap import dedent
+from os.path import expanduser
+import json, sys
+
+
+try:
+    name = sys.argv[1]
+    with open(expanduser('~/.aws/profile.json'), 'r') as f:
+        if name == 'list':
+            profiles = sorted(json.load(f).keys())
+            print('Available profiles:', end='\n')
+            for p in profiles:
+                print('*', p, end='\n')
+            sys.exit(0)
+        profile = json.load(f)[name]
+except IndexError:
+    print('Please specify a name of profile.')
+    print('USAGE: awsprof list|PROFILE_NAME')
+    sys.exit(1)
+except KeyError:
+    print('Name %s is not found.' % name)
+    sys.exit(1)
+
+conf_s = dedent(
+            """
+            [default]
+            output = {output}
+            region = {region}
+            """.format(**profile)).strip()
+
+cred_s = dedent(
+            """
+            [default]
+            aws_access_key_id = {aws_access_key_id}
+            aws_secret_access_key = {aws_secret_access_key}
+            """.format(**profile)).strip()
+
+with open(expanduser('~/.aws/config'), 'w') as f:
+    f.write(conf_s)
+
+with open(expanduser('~/.aws/credentials'), 'w') as f:
+    f.write(cred_s)
+
+print('Switched AWS profile to "%s".' % name)
+
