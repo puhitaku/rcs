@@ -1,10 +1,11 @@
 PS1=" \[\e[32m\]\W\[\e[0m\] \$ "
+RCS_DIR="${HOME}/dev/rcs"
 
 if [ "$(uname)" == "Linux" ]; then
     export DISPLAY=:0
     colorize="--color=auto"
 elif [ "$(uname)" == "Darwin" ]; then
-    complete -W "\`grep -oE '^[a-zA-Z0-9_.-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9_.-]*$//'\`" make
+    complete -W '$(grep -oE "^[a-zA-Z0-9_.-]+:([^=]|$)" Makefile | sed "s/[^a-zA-Z0-9_.-]*$//" | grep -v .PHONY)' make
     colorize="-G"
 fi
 
