@@ -1,49 +1,56 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
-from textwrap import dedent
+import json
+from configparser import ConfigParser
 from pathlib import Path
-import json, sys
+
+import click
 
 aws = Path.home() / '.aws'
 
 
-try:
-    name = sys.argv[1]
+@click.command(help='list or a specific profile name')
+@click.argument('operation', nargs=1)
+def main(operation):
     with open(aws / 'profile.json', 'r') as f:
-        if name == 'list':
-            profiles = sorted(json.load(f).keys())
-            print('Available profiles:', end='\n')
-            for p in profiles:
-                print('*', p, end='\n')
-            sys.exit(0)
-        profile = json.load(f)[name]
-except IndexError:
-    print('Please specify a name of profile.')
-    print('USAGE: awsprof list|PROFILE_NAME')
-    sys.exit(1)
-except KeyError:
-    print('Name %s is not found.' % name)
-    sys.exit(1)
+        profiles = json.load(f)
 
-conf_s = dedent(
-            """
-            [default]
-            output = {output}
-            region = {region}
-            """.format(**profile)).strip()
+    if operation == 'list':
+        list_profiles(profiles)
+    else:
+        switch_profiles(profiles, operation)
 
-cred_s = dedent(
-            """
-            [default]
-            aws_access_key_id = {aws_access_key_id}
-            aws_secret_access_key = {aws_secret_access_key}
-            """.format(**profile)).strip()
 
-with open(aws / 'config', 'w') as f:
-    f.write(conf_s)
+def list_profiles(profiles):
+    cp = ConfigParser()
+    cp.read(aws / 'credentials')
 
-with open(aws / 'credentials', 'w') as f:
-    f.write(cred_s)
+    print('Available profiles:')
+    for k, v in sorted(profiles.items(), key=lambda t: t[0]):
+        if v['aws_access_key_id'] == cp.get('default', 'aws_access_key_id', fallback=None):
+            print('*', k)
+        else:
+            print('-', k)
 
-print('Switched AWS profile to "%s".' % name)
+
+def switch_profiles(profiles, name):
+    if name not in profiles:
+        raise LookupError(f'Profile "{name}" was not found')
+
+    profile = profiles[name]
+
+    config = ConfigParser()
+    config['default'] = {'output': profile['output'], 'region': profile['region']}
+    with open(aws / 'config', 'w') as f:
+        config.write(f)
+
+    credentials = ConfigParser()
+    credentials['default'] = {'aws_access_key_id': profile['aws_access_key_id'], 'aws_secret_access_key': profile['aws_secret_access_key']}
+    with open(aws / 'credentials', 'w') as f:
+        credentials.write(f)
+
+    print('Switched AWS profile to "%s".' % name)
+
+
+main()
 
