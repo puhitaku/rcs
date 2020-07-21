@@ -212,6 +212,7 @@ if [ -f ~/git-completion.bash ]; then
     __reg_git_alias ga add
     __reg_git_alias gap add 'add --patch'
     __reg_git_alias gb branch
+    __reg_git_alias gba branch 'branch -a'
     __reg_git_alias gc commit
     __reg_git_alias gcam commit 'commit --amend -m'
     __reg_git_alias gcm commit 'commit -m'
