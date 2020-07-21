@@ -164,6 +164,14 @@ function addr2line2vi() {
     vi +$line $fn
 }
 
+function mdnssh() {
+    _IP=$(discover $1)
+    if [ $? ]; then
+        echo "Discovered: ${_IP}"
+        ssh ${_IP}
+    fi
+}
+
 function sshcp() {
     if [ $# -ne 3 ]; then
         echo "usage: sshcp FILEPATH [USER@]HOST OUTPATH"
