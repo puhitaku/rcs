@@ -59,3 +59,6 @@ if _curfile == 'Makefile'
     set noexpandtab
 endif
 
+:autocmd BufEnter *.go setlocal noexpandtab
+:autocmd BufEnter *.go2 setlocal noexpandtab
+:autocmd BufReadPost *.go2 set syntax=go
