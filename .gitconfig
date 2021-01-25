@@ -12,7 +12,7 @@
 [pager]
 	branch = cat
 	tag = cat
-	reflog = head -n10
+	reflog = head -n15
 
 [core]
 	editor = vim
