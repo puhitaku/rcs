@@ -1,0 +1,177 @@
+#!/usr/bin/env python3
+
+import sys
+from dataclasses import dataclass
+
+
+@dataclass
+class Style:
+    start: int
+    patch: dict
+    have_digits: bool
+    digits_start: int
+
+
+styles = {
+    'serif-b': Style(
+        0x1D400,
+        dict(),
+        True,
+        0x1D7CE,
+    ),
+    'serif-i': Style(
+        0x1D434,
+        {'h': 'ℎ'},
+        False,
+        0,
+    ),
+    'serif-bi': Style(
+        0x1D468,
+        dict(),
+        False,
+        0,
+    ),
+    'sans-serif-n': Style(
+        0x1D5A0,
+        dict(),
+        True,
+        0x1D7E2,
+    ),
+    'sans-serif-b': Style(
+        0x1D5D4,
+        dict(),
+        True,
+        0x1D7EC,
+    ),
+    'sans-serif-i': Style(
+        0x1D608,
+        dict(),
+        False,
+        0,
+    ),
+    'sans-serif-bi': Style(
+        0x1D63C,
+        dict(),
+        False,
+        0,
+    ),
+    'script-n': Style(
+        0x1D49C,
+        {
+            'B': 'ℬ',
+            'E': 'ℰ',
+            'F': 'ℱ',
+            'H': 'ℋ',
+            'I': 'ℐ',
+            'L': 'ℒ',
+            'M': 'ℳ',
+            'R': 'ℛ',
+            'e': 'ℯ',
+            'g': 'ℊ',
+            'o': 'ℴ',
+        },
+        False,
+        0,
+    ),
+    'script-b': Style(
+        0x1D4D0,
+        dict(),
+        False,
+        0,
+    ),
+    'fraktur-n': Style(
+        0x1D504,
+        {
+            'C': 'ℭ',
+            'H': 'ℌ',
+            'I': 'ℑ ',
+            'R': 'ℜ',
+            'Z': 'ℨ',
+        },
+        False,
+        0,
+    ),
+    'fraktur-b': Style(
+        0x1D56C,
+        dict(),
+        False,
+        0,
+    ),
+    'monospace': Style(
+        0x1D670,
+        dict(),
+        True,
+        0x1D7F6,
+    ),
+    'double-struck': Style(
+        0x1D538,
+        {
+            'C': 'ℂ',
+            'H': 'ℍ',
+            'N': 'ℕ',
+            'P': 'ℙ',
+            'Q': 'ℚ',
+            'R': 'ℝ',
+            'Z': 'ℤ',
+        },
+        True,
+        0x1D7D8,
+    ),
+}
+
+
+def convert(style, text):
+    out = []
+    for c in text:
+        if c in style.patch:
+            out.append(style.patch[c])
+            continue
+
+        if ord(c) in range(ord('A'), ord('Z') + 1):
+            start = style.start
+            offset = ord('A')
+        elif ord(c) in range(ord('a'), ord('z') + 1):
+            start = style.start
+            offset = ord('a') - 26
+        elif ord(c) in range(ord('0'), ord('9') + 1):
+            if not style.have_digits:
+                out.append(c)
+                continue
+            start = style.digits_start
+            offset = ord('0')
+        else:
+            out.append(c)
+            continue
+
+        c = start + ord(c) - offset
+        out.append(eval(f'"\\U{c:08x}"'))
+
+    return ''.join(out)
+
+
+def main():
+    if len(sys.argv) < 3:
+        print(f'Usage: {sys.argv[0]} STYLE TEXT')
+        print(f'Available styles:')
+        for name, style in styles.items():
+            sample1 = convert(
+                style, 'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG. 01234'
+            )
+            sample2 = convert(
+                style, 'the quick brown fox jumps over the lazy dog. 01234'
+            )
+            print(f' - {name}')
+            print(f'    {sample1}')
+            print(f'    {sample2}')
+        print()
+        sys.exit(1)
+
+    try:
+        style = styles[sys.argv[1]]
+    except KeyError:
+        print(f'Style "{sys.argv[1]}" was not found', file=sys.stderr)
+
+    print(convert(style, sys.argv[2]))
+
+
+main()
