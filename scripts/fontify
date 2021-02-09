@@ -171,7 +171,7 @@ def main():
     except KeyError:
         print(f'Style "{sys.argv[1]}" was not found', file=sys.stderr)
 
-    print(convert(style, sys.argv[2]))
+    print(convert(style, sys.argv[2]), end='')
 
 
 main()
