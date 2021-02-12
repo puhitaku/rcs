@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import sys
+import fileinput, sys
 from dataclasses import dataclass
 
 
@@ -150,28 +150,45 @@ def convert(style, text):
 
 
 def main():
-    if len(sys.argv) < 3:
-        print(f'Usage: {sys.argv[0]} STYLE TEXT')
-        print(f'Available styles:')
-        for name, style in styles.items():
-            sample1 = convert(
-                style, 'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG. 01234'
-            )
-            sample2 = convert(
-                style, 'the quick brown fox jumps over the lazy dog. 01234'
-            )
-            print(f' - {name}')
-            print(f'    {sample1}')
-            print(f'    {sample2}')
-        print()
+    tty = sys.stdin.isatty()
+    argv = sys.argv
+    sufficient_args = (tty and len(argv) >= 3) or (not tty and len(argv) >= 2)
+
+    if '-h' in argv or '--help' in argv or not sufficient_args:
+        usage()
+
+    if argv[1] not in styles:
+        print(f'Style "{argv[1]}" was not found', file=sys.stderr)
         sys.exit(1)
 
-    try:
-        style = styles[sys.argv[1]]
-    except KeyError:
-        print(f'Style "{sys.argv[1]}" was not found', file=sys.stderr)
+    style = styles[argv[1]]
 
-    print(convert(style, sys.argv[2]), end='')
+    if tty:
+        print(convert(style, argv[-1]), end='')
+    else:
+        print(convert(style, sys.stdin.read()), end='')
+
+
+def usage():
+    print(f'Usage: {sys.argv[0]} STYLE [TEXT]')
+    print(f'TEXT is ignored if stdin is piped.')
+    print(f'Available styles:')
+    for name, style in styles.items():
+        sample1 = convert(
+            style, 'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG. 01234'
+        )
+        sample2 = convert(
+            style, 'the quick brown fox jumps over the lazy dog. 01234'
+        )
+        print(f' - {name}')
+        print(f'    {sample1}')
+        print(f'    {sample2}')
+    print()
+
+    if '-h' in sys.argv or '--help' in sys.argv:
+        sys.exit(0)
+    else:
+        sys.exit(1)
 
 
 main()
