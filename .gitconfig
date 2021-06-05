@@ -16,3 +16,6 @@
 [core]
 	editor = vim
 	quotepath = false
+
+[pull]
+    ff = only
