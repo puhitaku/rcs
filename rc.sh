@@ -4,9 +4,12 @@ RCS_DIR="${HOME}/dev/rcs"
 if [ "$(uname)" == "Linux" ]; then
     export DISPLAY=:0
     colorize="--color=auto"
+    ttyusb_prefix="ttyUSB"
 elif [ "$(uname)" == "Darwin" ]; then
     complete -W '$(grep -oE "^[a-zA-Z0-9_.-]+:([^=]|$)" Makefile | sed "s/[^a-zA-Z0-9_.-]*$//" | grep -v .PHONY)' make
     colorize="-G"
+    ttyusb_prefix="cu."
+    export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
 fi
 
 if [ "${SSH_CLIENT}" != "" ] || [ "${SSH_TTY}" != "" ]; then
@@ -117,7 +120,7 @@ function _ttyhoge() {
 }
 
 function ttyusb() {
-    devpref=ttyUSB
+    devpref=$ttyusb_prefix
     _ttyhoge $@
 }
 
