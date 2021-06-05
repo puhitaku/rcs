@@ -304,6 +304,9 @@ alias joc='journalctl'
 alias s3='aws s3'
 alias cloudformation='aws cloudformation'
 
+# GitHub CLI
+alias gho='gh repo view -w'
+
 # enable alias expansion for sudo
 alias sudo='sudo '
 
