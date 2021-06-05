@@ -14,5 +14,5 @@
 	tag = cat
 
 [core]
-	editor = /usr/local/bin/vim
+	editor = vim
 	quotepath = false
