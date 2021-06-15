@@ -16,8 +16,8 @@ if [ "${SSH_CLIENT}" != "" ] || [ "${SSH_TTY}" != "" ]; then
     unset DISPLAY
 fi
 
+export PATH=$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 export PATH=$PATH:/sbin:/usr/sbin
-export PATH=$PATH:$HOME/.pyenv/bin:$HOME/.pyenv/shims
 export PATH=$PATH:$HOME/.poetry/bin
 export PATH=$PATH:/usr/lib/go-1.11/bin
 export PATH=$PATH:$HOME/.cargo/bin
