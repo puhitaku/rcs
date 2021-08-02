@@ -295,6 +295,10 @@ alias rename='tmux rename-window'
 alias dk='docker'
 alias dkprune='yes | docker image prune'
 
+# kubernetes
+alias ku='kubectl'
+alias mku='sudo minikube kubectl'
+
 # systemd etc.
 alias nec='networkctl'
 alias syc='systemctl'
