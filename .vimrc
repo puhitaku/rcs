@@ -62,3 +62,6 @@ endif
 :autocmd BufEnter *.go setlocal noexpandtab
 :autocmd BufEnter *.go2 setlocal noexpandtab
 :autocmd BufReadPost *.go2 set syntax=go
+
+" C/C++
+autocmd BufRead,BufNewFile *.c,*.cpp,*.h,*.hpp set ts=8 sw=8 cindent noexpandtab
