@@ -275,9 +275,16 @@ alias s2b='dtc -I dts -O dtb'
 
 alias py='python'
 alias ipy='ipython'
+alias venv='python -m venv'
+
+alias cぇあr='clear'
+alias んpm='npm'
+alias ご='go'
+alias ゔぃ='vi'
 alias pyてょn='python'
 alias いpyてょn='ipython'
-alias venv='python -m venv'
+alias ぴぇんv='pyenv'
+alias ぴp='pip'
 
 alias copy='xsel -ip && xsel -op | xsel -ib'
 alias du1='du -hd 1'
