@@ -9,13 +9,10 @@
 [url "git@bitbucket.org:"]
 	insteadOf = https://bitbucket.org/
 
-[pager]
-	branch = cat
-	tag = cat
-
 [core]
 	editor = vim
 	quotepath = false
+	pager = "less -RFX"
 
 [pull]
     ff = only
