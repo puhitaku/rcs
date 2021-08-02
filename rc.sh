@@ -77,7 +77,7 @@ function gdi() {
     while [ 1 ]; do
         choice=$(git status | ag 'ed:\s*' | peco | ag -o 'ed:\s*\K.*')
         if [ ! -z $choice ]; then
-            git diff $choice
+            git diff --color $choice | less
         else
             return 0
         fi
