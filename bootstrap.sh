@@ -26,7 +26,11 @@ else
     echo "Warning: no OS-dependent .tmux.conf is not installed for $(uname)."
 fi
 
+
 ln -s $(pwd)/.vimrc ~/.vimrc
+git submodule update --init  # pull vim packages
+ln -s $(pwd)/vim ~/.vim
+
 ln -s $(pwd)/.gitconfig ~/.gitconfig
 ln -s $(pwd)/.inputrc ~/.inputrc
 ln -s $(pwd)/.minirc.dfl ~/.minirc.dfl

@@ -65,3 +65,8 @@ endif
 
 " C/C++
 autocmd BufRead,BufNewFile *.c,*.cpp,*.h,*.hpp set ts=8 sw=8 cindent noexpandtab
+
+" Python
+" Add python-syntax here and it gets loaded earlier than the built-in syntax
+packadd python-syntax
+let g:python_highlight_all = 1
