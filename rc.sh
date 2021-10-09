@@ -24,6 +24,8 @@ export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.local/kitty.app/bin
 export PATH=$PATH:$RCS_DIR/scripts
 
+export PYENV_ROOT="$HOME/.pyenv"
+
 export GO111MODULE=auto
 export GOPATH="${HOME}/dev/go"
 export PATH="$PATH:$GOPATH/bin"
