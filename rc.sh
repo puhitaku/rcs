@@ -197,6 +197,26 @@ function slackterm() {
     fi
 }
 
+function __fontify() {
+    echo -n "$2 -> "
+    fontify "$1" "$2" | tee /dev/tty | pbcopy
+    echo
+}
+
+alias fsb='__fontify serif-b $1'
+alias fsi='__fontify serif-i $1'
+alias fsbi='__fontify serif-bi $1'
+alias fssn='__fontify sans-serif-n $1'
+alias fssb='__fontify sans-serif-b $1'
+alias fssi='__fontify sans-serif-i $1'
+alias fssbi='__fontify sans-serif-bi $1'
+alias fscn='__fontify script-n $1'
+alias fscb='__fontify script-b $1'
+alias ffn='__fontify fraktur-n $1'
+alias ffb='__fontify fraktur-b $1'
+alias fms='__fontify monospace $1'
+alias fds='__fontify double-struck $1'
+
 # Git aliases
 alias g="git"
 
