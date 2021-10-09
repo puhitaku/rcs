@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+import json
+import sys
+
+import click
+import requests
+
+# https://domaincheck.il24.net/dm_check_domain.cgi?callback=jQuery111008874832901929623_1633745159828&domain=xn--4-s8t6g8b7451b.xn--32vp30h.jp&_=1633745159829
+
+
+@click.group()
+def cmd():
+    pass
+
+
+@cmd.command(help='Inquire availability of specified domain(s)')
+@click.argument('domains', nargs=-1, required=True)
+def inquire(domains: str):
+    for domain in domains:
+        tokens = []
+        for token in domain.split('.'):
+            encoded = token.encode('punycode')
+            if encoded.endswith(b'-'):
+                tokens.append(token)
+            else:
+                tokens.append('xn--' + encoded.decode())
+        encoded = '.'.join(tokens).lower()
+        res = requests.get(
+            'https://domaincheck.il24.net/dm_check_domain.cgi?'
+            'callback=a&'
+            f'domain={encoded}'
+        )
+
+        if res.status_code != 200:
+            print(f'Error: server returned non-200: {res.status_code}', file=sys.stderr)
+            sys.exit(1)
+
+        try:
+            j = json.loads(res.content.decode()[2:][:-2])
+        except Exception as e:
+            print(f'Error: failed to decode the response body: {e}')
+            sys.exit(1)
+
+        available = j.get('available')
+        if available is None:
+            print(f'Error: server returned an unexpected response: {j}')
+            sys.exit(1)
+
+        restricted = j.get('restricted', '0') != '0'
+        premium = j.get('premium_class', '') != ''
+        premium_price = j.get('premium_price_afternic', 0)
+
+        if domain == encoded:
+            result = f'{domain}'
+        else:
+            result = f'{domain} ({encoded})'
+
+        result += f': AVAILABLE' if available else ': NOT AVAIL'
+
+        if premium:
+            result += f' (Premium: {premium_price} JPY)'
+
+        print(result)
+
+    print()
+
+
+cmd()
