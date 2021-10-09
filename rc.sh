@@ -244,6 +244,7 @@ if [ -f ~/git-completion.bash ]; then
     __reg_git_alias gcob checkout 'checkout -b'
     __reg_git_alias gd diff
     __reg_git_alias gf fetch
+    __reg_git_alias gpfp pull 'pull && git fetch --prune'
     __reg_git_alias gfp fetch 'fetch --prune'
     __reg_git_alias gl log
     __reg_git_alias gp push
