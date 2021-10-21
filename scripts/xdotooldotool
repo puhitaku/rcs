@@ -1,5 +1,24 @@
 #!/usr/bin/env python3
 
+# xdotooldotool
+#
+# Translate key events from stdin to xdotool calls.
+# Controll the X session via any terminals like SSH!
+#
+# Requirements:
+#  - Python 3.7+
+#  - xdotool
+#
+# How to use:
+#  - Install `xdotool`
+#  - Run this script
+#
+# Translation:
+#  - Any key input except "Shift + Arrow keys" = As-is
+#  - "Shift + ←↓↑→" = Mouse move
+#  - "Alt + Shift + ←" = Left click
+#  - "Alt + Shift + →" = Right click
+
 import dataclasses
 import os
 import subprocess
