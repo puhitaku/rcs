@@ -5,10 +5,12 @@ if [ "$(uname)" == "Linux" ]; then
     export DISPLAY=:0
     colorize="--color=auto"
     ttyusb_prefix="ttyUSB"
+    ttyusb_minicom="sudo minicom"
 elif [ "$(uname)" == "Darwin" ]; then
     complete -W '$(grep -oE "^[a-zA-Z0-9_.-]+:([^=]|$)" Makefile | sed "s/[^a-zA-Z0-9_.-]*$//" | grep -v .PHONY)' make
     colorize="-G"
     ttyusb_prefix="cu."
+    ttyusb_minicom="minicom"
     export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
 fi
 
@@ -112,9 +114,9 @@ function gocd() {
 function _ttyhoge() {
     if [ -n "$1" ]; then
         if [ -n "$2" ]; then
-            sudo minicom -c on -D /dev/${devpref}${1} -b ${2}
+            ${ttyusb_minicom} -c on -D /dev/${devpref}${1} -b ${2}
         else
-            sudo minicom -c on -D /dev/${devpref}${1} -b 115200
+            ${ttyusb_minicom} -c on -D /dev/${devpref}${1} -b 115200
         fi
     else
         ls /dev/${devpref}*
