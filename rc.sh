@@ -302,6 +302,8 @@ alias py='python'
 alias ipy='ipython'
 alias venv='python -m venv'
 
+alias tmuxa='tmux a'
+
 alias cぇあr='clear'
 alias んpm='npm'
 alias ご='go'
@@ -310,6 +312,8 @@ alias pyてょn='python'
 alias いpyてょn='ipython'
 alias ぴぇんv='pyenv'
 alias ぴp='pip'
+alias tむx='tmux'
+alias tむxあ='tmux a'
 
 alias copy='xsel -ip && xsel -op | xsel -ib'
 alias du1='du -hd 1'
