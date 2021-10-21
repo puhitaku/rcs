@@ -1,0 +1,184 @@
+#!/usr/bin/env python3
+
+import dataclasses
+import os
+import subprocess
+import sys
+import termios
+import tty
+from typing import Optional
+
+
+@dataclasses.dataclass
+class Keybind:
+    key: str
+    modifier: Optional[str] = None
+
+    def __repr__(self):
+        mod = f'{self.modifier} + ' if self.modifier else ''
+        return mod + self.key
+
+
+@dataclasses.dataclass
+class Mousebind:
+    move: Optional[tuple] = None
+    button: Optional[int] = None
+
+    def __repr__(self):
+        if self.move:
+            return f'Move X: {self.move[0]}, Y: {self.move[1]}'
+        elif self.button:
+            return f'Press button {self.button}'
+        else:
+            return 'Nothing to do!'
+
+
+keymap = {chr(c-96): Keybind(chr(c), 'Control_L') for c in range(97, 123)}
+
+keymap.update({
+    '!': Keybind('exclam'),
+    '@': Keybind('at'),
+    '#': Keybind('numbersign'),
+    '$': Keybind('dollar'),
+    '%': Keybind('percent'),
+    '^': Keybind('asciicircum'),
+    '&': Keybind('ampersand'),
+    '*': Keybind('asterisk'),
+    '(': Keybind('parenleft'),
+    ')': Keybind('parenright'),
+    '-': Keybind('minus'),
+    '_': Keybind('underscore'),
+    '+': Keybind('plus'),
+    '=': Keybind('equal'),
+    '\\': Keybind('backslash'),
+    '|': Keybind('bar'),
+    '`': Keybind('grave'),
+    '~': Keybind('asciitilde'),
+    '[': Keybind('bracketleft'),
+    '{': Keybind('braceleft'),
+    ']': Keybind('bracketright'),
+    '}': Keybind('braceright'),
+    ';': Keybind('semicolon'),
+    ':': Keybind('colon'),
+    "'": Keybind('apostrophe'),
+    '"': Keybind('quotedbl'),
+    ',': Keybind('comma'),
+    '<': Keybind('less'),
+    '.': Keybind('period'),
+    '>': Keybind('greater'),
+    '/': Keybind('slash'),
+    '?': Keybind('question'),
+    ' ': Keybind('space'),
+    '\n': Keybind('Return'),
+    '\t': Keybind('Tab'),
+    '\x1b\x1b': Keybind('Escape'),
+    '\x1bOP': Keybind('F1'),
+    '\x1bOQ': Keybind('F2'),
+    '\x1bOR': Keybind('F3'),
+    '\x1bOS': Keybind('F4'),
+    '\x1b[15~': Keybind('F5'),
+    '\x1b[17~': Keybind('F6'),
+    '\x1b[18~': Keybind('F7'),
+    '\x1b[19~': Keybind('F8'),
+    '\x1b[20~': Keybind('F9'),
+    '\x1b[21~': Keybind('F10'),
+    '\x1b[23~': Keybind('F11'),
+    '\x1b[24~': Keybind('F12'),
+    '\x1b[1~': Keybind('Home'),
+    '\x1b[2~': Keybind('Insert'),
+    '\x1b[3~': Keybind('Delete'),
+    '\x1b[4~': Keybind('End'),
+    '\x1b[5~': Keybind('Page_Up'),
+    '\x1b[5;5~': Keybind('Page_Up', 'Control_L'),
+    '\x1b[6~': Keybind('Page_Down'),
+    '\x1b[6;5~': Keybind('Page_Down', 'Control_L'),
+    '\x1b[A': Keybind('Up'),
+    '\x1b[B': Keybind('Down'),
+    '\x1b[C': Keybind('Right'),
+    '\x1b[D': Keybind('Left'),
+    '\x1b[Z': Keybind('Tab', 'Shift_L'),
+    '\x7f': Keybind('BackSpace'),
+    '\x1b[1;2A': Mousebind(move=(0, -10)),
+    '\x1b[1;2B': Mousebind(move=(0, 10)),
+    '\x1b[1;2C': Mousebind(move=(10, 0)),
+    '\x1b[1;2D': Mousebind(move=(-10, 0)),
+    '\x1b[1;4D': Mousebind(button=1),
+    '\x1b[1;4C': Mousebind(button=3),
+})
+
+
+def main():
+    while True:
+        _main()
+
+
+def _main():
+    c = sys.stdin.read(1)
+
+    if c == '\x1b':
+        c += sys.stdin.read(1)
+        if c[-1:] == 'O':
+            c += sys.stdin.read(1)
+        elif c[-1:] == '[':
+            c += sys.stdin.read(1)
+            if c[-1:] in '123456':
+                c += sys.stdin.read(1)
+                if c[-1:] == ';':
+                    c += sys.stdin.read(2)
+                elif c[-1:] == '~':
+                    pass
+                else:
+                    c += sys.stdin.read(1)
+                    if c[-1:] == ';':
+                        c += sys.stdin.read(2)
+
+    log(c, end='')
+
+    if c in keymap:
+        bind = keymap[c]
+        log(' ->', bind)
+    elif not c.startswith('\x1b'):
+        bind = Keybind(c)
+        log(' ->', bind)
+    else:
+        log('')
+        return
+
+    if isinstance(bind, Keybind):
+        if bind.modifier:
+            _do(bind.modifier, arg='keydown')
+            try:
+                _do(bind.key)
+            finally:
+                _do(bind.modifier, arg='keyup')
+        else:
+            _do(bind.key)
+    elif isinstance(bind, Mousebind):
+        if bind.move:
+            _domousemove(*bind.move)
+        if bind.button:
+            _do(str(bind.button), arg='click')
+
+
+def _do(key, arg='key'):
+    subprocess.check_call(['xdotool', arg, key], env={'DISPLAY': ':0'})
+
+
+def _domousemove(x, y):
+    subprocess.check_call(['xdotool', 'mousemove_relative', '--', str(x), str(y)], env={'DISPLAY': ':0'})
+
+
+def log(*args, **kwargs):
+    if sys.argv[-1] == '-v':
+        print(*args, **kwargs)
+
+
+tc = termios.tcgetattr(sys.stdin.fileno())
+tty.setcbreak(sys.stdin.fileno())
+sys.stdin = os.fdopen(sys.stdin.fileno(), 'r')
+
+try:
+    main()
+finally:
+    termios.tcsetattr(sys.stdin.fileno(), termios.TCSANOW, tc)
+
