@@ -38,3 +38,6 @@ ln -s $(pwd)/.minirc.dfl ~/.minirc.dfl
 mkdir -p ~/.config/kitty/
 ln -s $(pwd)/kitty.conf ~/.config/kitty/kitty.conf
 
+mkdir -p ~/.ipython/profile_default
+ln -s $(pwd)/ipython_config.py ~/.ipython/profile_default/ipython_config.py
+
