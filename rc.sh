@@ -238,6 +238,7 @@ if [ -f ~/git-completion.bash ]; then
     source ~/git-completion.bash
     __git_complete g _git
     __reg_git_alias ga add
+    __reg_git_alias gau add 'add -u'
     __reg_git_alias gap add 'add --patch'
     __reg_git_alias gb branch
     __reg_git_alias gba branch 'branch -a'
