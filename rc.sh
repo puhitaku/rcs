@@ -25,6 +25,7 @@ export PATH=$PATH:/usr/lib/go-1.1?/bin
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.local/kitty.app/bin
 export PATH=$PATH:$RCS_DIR/scripts
+export PATH=$PATH:$HOME/dev/mtplvcap
 
 export PYENV_ROOT="$HOME/.pyenv"
 
