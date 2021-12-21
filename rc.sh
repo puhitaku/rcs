@@ -41,6 +41,8 @@ set -o vi
 
 # pyenv
 eval "$(pyenv init -)"
+alias envsetup="pip install -U -r ${RCS_DIR}/requirements.txt"
+alias ぴぇんv='pyenv'
 
 # z
 if [[ -x `which z` ]]; then
@@ -312,7 +314,6 @@ alias ご='go'
 alias ゔぃ='vi'
 alias pyてょn='python'
 alias いpyてょn='ipython'
-alias ぴぇんv='pyenv'
 alias ぴp='pip'
 alias tむx='tmux'
 alias tむxあ='tmux a'
