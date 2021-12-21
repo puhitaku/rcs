@@ -1,6 +1,11 @@
 set show-mode-in-prompt on
-set vi-ins-mode-string >
-set vi-cmd-mode-string :
+
+# https://stackoverflow.com/a/42107711/2735798
+set vi-ins-mode-string \1\e[6 q\2>
+set vi-cmd-mode-string \1\e[2 q\2:
+
+set keymap vi-insert
+RETURN: "\e\n"
 
 # reduce tmux escape delay
 set keyseq-timeout 1
