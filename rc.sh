@@ -338,7 +338,7 @@ alias minicom='minicom -c on'
 alias nowjst='date +"%Y-%m-%d %A %H:%M:%S"'
 alias nowutc='date -u +"%Y-%m-%dT%H:%M:%SZ"'
 
-alias rename='tmux rename-window'
+alias renamewindow='tmux rename-window'
 
 # docker
 alias dk='docker'
