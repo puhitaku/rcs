@@ -44,6 +44,15 @@ eval "$(pyenv init -)"
 alias envsetup="pip install -U -r ${RCS_DIR}/requirements.txt"
 alias ぴぇんv='pyenv'
 
+nopyenv() {
+    if [ $# = 0 ]; then
+        echo "Usage: nopyenv COMMAND [ARGS]"
+        return
+    fi
+    remove="$HOME/.pyenv/shims:"
+    PATH=$(echo $PATH | sed "s+$remove++g") $@
+}
+
 # z
 if [[ -x `which z` ]]; then
     source ~/dev/z/z.sh
