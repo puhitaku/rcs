@@ -327,6 +327,7 @@ alias いpyてょn='ipython'
 alias ぴp='pip'
 alias tむx='tmux'
 alias tむxあ='tmux a'
+alias えぃt='exit'
 
 alias copy='xsel -ip && xsel -op | xsel -ib'
 alias du1='du -hd 1'
