@@ -1,5 +1,5 @@
 PS1=" \[\e[32m\]\W\[\e[0m\] \$ "
-echo -ne "\033]0;${USER}@$(echo $HOSTNAME | sed 's/\.local//g')\007"
+bash -c 'echo -en "\033]0;${USER}@$(echo $HOSTNAME | sed "s/\.local//g")\007"'
 RCS_DIR="${HOME}/dev/rcs"
 
 if [ "$(uname)" == "Linux" ]; then
