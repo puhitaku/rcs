@@ -55,12 +55,12 @@ nopyenv() {
 }
 
 # z
-if [[ -x `which z` ]]; then
+if [[ -x `which z 2> /dev/null` ]]; then
     source ~/dev/z/z.sh
 fi
 
 # Color Diff
-if [[ -x `which colordiff` ]]; then
+if [[ -x `which colordiff 2> /dev/null` ]]; then
     alias diff='colordiff -u'
 else
     alias diff='diff -u'
