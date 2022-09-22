@@ -14,5 +14,8 @@
 	quotepath = false
 	pager = "less -RFX"
 
+[push]
+    autoSetupRemote = true
+
 [pull]
     ff = only
