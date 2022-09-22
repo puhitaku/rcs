@@ -23,3 +23,12 @@
 [ghq]
     root = ~/dev/go/src
     root = ~/dev
+
+[sendemail]
+    smtpServer = smtp.gmail.com
+    smtpServerPort = 587
+    smtpEncryption = tls
+    smtpUser = puhitaku@gmail.com
+
+[credential]
+    helper = store
