@@ -4,3 +4,6 @@
 [submodule "vim/pack/syntax/start/zig.vim"]
 	path = vim/pack/syntax/start/zig.vim
 	url = https://github.com/ziglang/zig.vim
+[submodule "vim/pack/format/start/editorconfig-vim"]
+	path = vim/pack/format/start/editorconfig-vim
+	url = https://github.com/editorconfig/editorconfig-vim.git
