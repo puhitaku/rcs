@@ -1,18 +1,18 @@
 # This is Git's per-user configuration file.
 [user]
-	name = Takumi Sueda
-	email = puhitaku@gmail.com
+    name = Takumi Sueda
+    email = puhitaku@gmail.com
 
 [url "git@github.com:"]
-	insteadOf = https://github.com/
+    insteadOf = https://github.com/
 
 [url "git@bitbucket.org:"]
-	insteadOf = https://bitbucket.org/
+    insteadOf = https://bitbucket.org/
 
 [core]
-	editor = vim
-	quotepath = false
-	pager = "less -RFX"
+    editor = vim
+    quotepath = false
+    pager = "less -RFX"
 
 [push]
     autoSetupRemote = true
