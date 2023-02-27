@@ -124,6 +124,15 @@ function gocd() {
     fi
 }
 
+# TODO: DRY
+function dj() {
+    TARGET="${HOME}/dev"
+    CHOSEN=$(find ${TARGET} -mindepth 1 -maxdepth 3 -type d -o -type l | sed -E "s|${TARGET}/||g" | ag -v "\.[^/]+$" | peco)
+    if [ "$CHOSEN" != "" ]; then
+        cd ${TARGET}/${CHOSEN}
+    fi
+}
+
 function _ttyhoge() {
     if [ -n "$1" ]; then
         if [ -n "$2" ]; then
