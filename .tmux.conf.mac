@@ -4,3 +4,5 @@ bind-key p run "pbpaste | tmux load-buffer - && tmux paste-buffer"
 
 set-option -g default-shell /opt/homebrew/bin/bash
 
+bind-key -T copy-mode-vi WheelUpPane send -N2 -X scroll-up
+bind-key -T copy-mode-vi WheelDownPane send -N2 -X scroll-down
