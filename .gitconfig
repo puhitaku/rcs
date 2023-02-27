@@ -19,3 +19,7 @@
 
 [pull]
     ff = only
+
+[ghq]
+    root = ~/dev/go/src
+    root = ~/dev
