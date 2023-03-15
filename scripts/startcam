@@ -1,0 +1,114 @@
+#!/usr/bin/env python3
+import os
+import signal
+import subprocess
+import sys
+import time
+from pathlib import Path
+from typing import Optional
+
+try:
+    import obsws_python as obs
+except ImportError:
+    print('Please install obsws-python: pip install obsws-python', file=sys.stderr)
+    sys.exit(1)
+
+try:
+    import requests as req
+except ImportError:
+    print('Please install requests: pip install requests', file=sys.stderr)
+    sys.exit(1)
+
+
+def connect() -> tuple[Optional[obs.ReqClient], Optional[Exception]]:
+    wait_count = 0
+    while True:
+        try:
+            cli = obs.ReqClient(
+                host='localhost',
+                port=4455,
+                password=os.environ.get('OBS_WS_PASSWORD'),
+            )
+            return cli, None
+        except ConnectionRefusedError:
+            if wait_count >= 30:
+                return None, TimeoutError('Could not connect to OBS within 30 seconds.')
+            print('.', end='')
+            wait_count += 1
+            time.sleep(1)
+        except Exception as e:
+            return None, e
+        finally:
+            print()
+
+
+program_name = Path(sys.argv[0]).name
+
+if not 'OBS_WS_PASSWORD' in os.environ:
+    print('Please set OBS_WS_PASSWORD variable', file=sys.stderr)
+    sys.exit(1)
+
+obs_path = list(Path('/').glob('./Applications/OBS.app/Contents/MacOS/OBS'))
+
+if not obs_path:
+    print('OBS is not installed', file=sys.stderr)
+    sys.exit(1)
+
+defer = []
+
+try:
+    # Start mtplvcapand defer killing it
+    proc_mtp = subprocess.Popen('sudo mtplvcap', shell=True, stdin=sys.stdin, preexec_fn=os.setsid)
+    proc_mtp = subprocess.Popen(['sudo', 'mtplvcap'])
+
+    def bye_mtp():
+        print(f'{program_name}: stopping mtplvcap')
+        if proc_mtp.poll() is None:
+            subprocess.check_call(f'sudo pkill -INT mtplvcap', shell=True)
+            proc_mtp.wait()
+
+    defer.append(bye_mtp)
+
+    # Start OBS and defer killing it
+    proc_obs = subprocess.Popen(
+        str(obs_path[0]), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True
+    )
+
+    def bye_obs():
+        print(f'{program_name}: stopping OBS')
+        if proc_obs.poll() is None:
+            os.kill(proc_obs.pid, signal.SIGTERM)
+            proc_obs.wait()
+
+    defer.append(bye_obs)
+
+    # Connect to the OBS WS server, start virtual camera, and defer stopping it
+    cli, err = connect()
+    if err is not None:
+        print(err, file=sys.stderr)
+        sys.exit(1)
+
+    cli.start_virtual_cam()
+
+    def bye_virtual_cam():
+        print(f'{program_name}: stopping the virtual camera')
+        cli.stop_virtual_cam()
+
+    defer.append(bye_virtual_cam)
+
+    # Turn the light on and defer turning it off
+    req.put('http://face-light.local/light', json={'brightness': 255, 'temperature': 2200})
+
+    def bye_light():
+        print(f'{program_name}: turning the light off')
+        req.put('http://face-light.local/light', json={'brightness': 0, 'temperature': 2200})
+
+    defer.append(bye_light)
+
+    input(f'{program_name}: press enter to stop the virtual camera.')
+finally:
+    for func in defer[::-1]:
+        try:
+            func()
+        except Exception as e:
+            print(e)
