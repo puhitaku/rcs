@@ -38,7 +38,7 @@ def connect() -> tuple[Optional[obs.ReqClient], Optional[Exception]]:
 def main():
     program_name = Path(sys.argv[0]).name
 
-    if not 'OBS_WS_PASSWORD' in os.environ:
+    if 'OBS_WS_PASSWORD' not in os.environ:
         print('Please set OBS_WS_PASSWORD variable', file=sys.stderr)
         sys.exit(1)
 
@@ -48,7 +48,7 @@ def main():
         print('OBS is not installed', file=sys.stderr)
         sys.exit(1)
 
-    # Start mtplvcapand defer killing it
+    # Start mtplvcap and defer killing it
     proc_mtp = subprocess.Popen('sudo mtplvcap', shell=True)
 
     def bye_mtp():
