@@ -7,6 +7,8 @@ import time
 from pathlib import Path
 from typing import Optional
 
+from defer.defer import defers
+
 try:
     import obsws_python as obs
 except ImportError:
@@ -42,21 +44,20 @@ def connect() -> tuple[Optional[obs.ReqClient], Optional[Exception]]:
             print()
 
 
-program_name = Path(sys.argv[0]).name
+@defers
+def main():
+    program_name = Path(sys.argv[0]).name
 
-if not 'OBS_WS_PASSWORD' in os.environ:
-    print('Please set OBS_WS_PASSWORD variable', file=sys.stderr)
-    sys.exit(1)
+    if not 'OBS_WS_PASSWORD' in os.environ:
+        print('Please set OBS_WS_PASSWORD variable', file=sys.stderr)
+        sys.exit(1)
 
-obs_path = list(Path('/').glob('./Applications/OBS.app/Contents/MacOS/OBS'))
+    obs_path = list(Path('/').glob('./Applications/OBS.app/Contents/MacOS/OBS'))
 
-if not obs_path:
-    print('OBS is not installed', file=sys.stderr)
-    sys.exit(1)
+    if not obs_path:
+        print('OBS is not installed', file=sys.stderr)
+        sys.exit(1)
 
-defer = []
-
-try:
     # Start mtplvcapand defer killing it
     proc_mtp = subprocess.Popen('sudo mtplvcap', shell=True, stdin=sys.stdin, preexec_fn=os.setsid)
     proc_mtp = subprocess.Popen(['sudo', 'mtplvcap'])
@@ -67,7 +68,7 @@ try:
             subprocess.check_call(f'sudo pkill -INT mtplvcap', shell=True)
             proc_mtp.wait()
 
-    defer.append(bye_mtp)
+    defer: bye_mtp()
 
     # Start OBS and defer killing it
     proc_obs = subprocess.Popen(
@@ -80,7 +81,7 @@ try:
             os.kill(proc_obs.pid, signal.SIGTERM)
             proc_obs.wait()
 
-    defer.append(bye_obs)
+    defer: bye_obs()
 
     # Connect to the OBS WS server, start virtual camera, and defer stopping it
     cli, err = connect()
@@ -94,7 +95,7 @@ try:
         print(f'{program_name}: stopping the virtual camera')
         cli.stop_virtual_cam()
 
-    defer.append(bye_virtual_cam)
+    defer: bye_virtual_cam()
 
     # Turn the light on and defer turning it off
     req.put('http://face-light.local/light', json={'brightness': 255, 'temperature': 2200})
@@ -103,12 +104,9 @@ try:
         print(f'{program_name}: turning the light off')
         req.put('http://face-light.local/light', json={'brightness': 0, 'temperature': 2200})
 
-    defer.append(bye_light)
+    defer: bye_light()
 
     input(f'{program_name}: press enter to stop the virtual camera.')
-finally:
-    for func in defer[::-1]:
-        try:
-            func()
-        except Exception as e:
-            print(e)
+
+
+main()
