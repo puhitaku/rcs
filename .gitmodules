@@ -16,3 +16,6 @@
 [submodule "scripts/vendor/requests"]
 	path = scripts/vendor/requests
 	url = https://github.com/psf/requests.git
+[submodule "scripts/vendor/click"]
+	path = scripts/vendor/click
+	url = https://github.com/pallets/click.git
