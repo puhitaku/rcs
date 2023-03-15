@@ -7,6 +7,12 @@
 [submodule "vim/pack/format/start/editorconfig-vim"]
 	path = vim/pack/format/start/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim.git
-[submodule "scripts/defer"]
-	path = scripts/defer
+[submodule "scripts/vendor/defer"]
+	path = scripts/vendor/defer
 	url = https://github.com/dankeyy/defer.py.git
+[submodule "scripts/vendor/obsws-python"]
+	path = scripts/vendor/obsws-python
+	url = https://github.com/aatikturk/obsws-python.git
+[submodule "scripts/vendor/requests"]
+	path = scripts/vendor/requests
+	url = https://github.com/psf/requests.git

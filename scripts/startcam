@@ -7,19 +7,9 @@ import time
 from pathlib import Path
 from typing import Optional
 
-from defer.defer import defers
-
-try:
-    import obsws_python as obs
-except ImportError:
-    print('Please install obsws-python: pip install obsws-python', file=sys.stderr)
-    sys.exit(1)
-
-try:
-    import requests as req
-except ImportError:
-    print('Please install requests: pip install requests', file=sys.stderr)
-    sys.exit(1)
+import obsws_python as obs
+import requests as req
+from defer import defers
 
 
 def connect() -> tuple[Optional[obs.ReqClient], Optional[Exception]]:
