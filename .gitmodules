@@ -7,3 +7,6 @@
 [submodule "vim/pack/format/start/editorconfig-vim"]
 	path = vim/pack/format/start/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim.git
+[submodule "scripts/defer"]
+	path = scripts/defer
+	url = https://github.com/dankeyy/defer.py.git
