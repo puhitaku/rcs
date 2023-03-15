@@ -38,6 +38,9 @@ ln -s $(pwd)/.minirc.dfl ~/.minirc.dfl
 mkdir -p ~/.config/kitty/
 ln -s $(pwd)/kitty.conf ~/.config/kitty/kitty.conf
 
+mkdir -p ~/.config/peco/
+ln -s $(pwd)/peco_config.json ~/.config/peco/config.json
+
 mkdir -p ~/.ipython/profile_default
 ln -s $(pwd)/ipython_config.py ~/.ipython/profile_default/ipython_config.py
 
