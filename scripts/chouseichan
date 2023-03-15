@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+
+"""
+Chousei-chan: 調整さんの日付一覧を生成するスクリプト
+
+# 必要なもの
+
+ - Python 3.9 以上
+
+# 使い方
+
+`chouseichan --help` を読んでください。
+"""
+
+import sys
+from datetime import datetime, timedelta
+
+try:
+    import click
+except ImportError:
+    print(
+        'Failed to import click. Try installing click: `pip install click`',
+        file=sys.stderr,
+    )
+    sys.exit(1)
+
+
+def err(*args, **kwargs):
+    print(*args, **kwargs, file=sys.stderr)
+
+
+@click.option(
+    '-r',
+    '--date-range',
+    nargs=2,
+    multiple=True,
+    type=click.Tuple([click.DateTime(), click.DateTime()]),
+    help='Specify a range of date',
+)
+@click.option(
+    '-d', '--date', multiple=True, type=click.DateTime(formats=['%Y-%m-%d']), help='Specify a date'
+)
+@click.option('-t', '--time', multiple=True, help='Specify a starting time')
+@click.command()
+def main(date: list[datetime], date_range: list[tuple[datetime, datetime]], time: list[str]):
+    """Chousei-chan, an assistant of Chousei-san
+
+    \b
+    Example 1: chouseichan -d 2021-08-01 -r 2021-08-03 2021-08-04 -t 17:00 -t 19:00
+
+    \b
+    2021/8/1(日) 17:00
+    2021/8/1(日) 19:00
+    2021/8/3(火) 17:00
+    2021/8/3(火) 19:00
+    2021/8/4(水) 17:00
+    2021/8/4(水) 19:00
+
+    -t option accepts any strings.
+
+    \b
+    Example 2: chouseichan -d 2021-08-08 -d 2021-08-10 -r 2021-08-05 2021-08-06 -t A -t B
+
+    \b
+    2021/8/5(木) A
+    2021/8/5(木) B
+    2021/8/6(金) A
+    2021/8/6(金) B
+    2021/8/8(日) A
+    2021/8/8(日) B
+    2021/8/10(火) A
+    2021/8/10(火) B
+    """
+
+    if len(date) == 0 and len(date_range) == 0:
+        err('Error: neither -d nor -t are specified')
+        err()
+        with click.Context(main) as ctx:
+            err(main.get_help(ctx))
+        sys.exit(1)
+
+    if len(time) == 0:
+        time = ['']
+
+    dates = list(date)
+
+    for r in date_range:
+        start, end = r[0], r[1]
+        if start >= end:
+            raise ValueError('The end of a range must be greater than the beginning')
+
+        delta = end - start
+        for n in range(delta.days + 1):
+            dates.append(start + timedelta(days=1) * n)
+
+    dates.sort()
+
+    for d in dates:
+        for t in time:
+            dow = '月火水木金土日'
+            if t == '':
+                print(f'{d.year}/{d.month}/{d.day}({dow[d.weekday()]})')
+            else:
+                print(f'{d.year}/{d.month}/{d.day}({dow[d.weekday()]}) {t}')
+
+
+main()
