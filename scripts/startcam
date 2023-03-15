@@ -49,8 +49,7 @@ def main():
         sys.exit(1)
 
     # Start mtplvcapand defer killing it
-    proc_mtp = subprocess.Popen('sudo mtplvcap', shell=True, stdin=sys.stdin, preexec_fn=os.setsid)
-    proc_mtp = subprocess.Popen(['sudo', 'mtplvcap'])
+    proc_mtp = subprocess.Popen('sudo mtplvcap', shell=True)
 
     def bye_mtp():
         print(f'{program_name}: stopping mtplvcap')
