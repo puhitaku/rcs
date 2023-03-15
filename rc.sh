@@ -338,6 +338,7 @@ alias ぴp='pip'
 alias tむx='tmux'
 alias tむxあ='tmux a'
 alias えぃt='exit'
+alias おペン。='open .'
 
 alias copy='xsel -ip && xsel -op | xsel -ib'
 alias du1='du -hd 1'
