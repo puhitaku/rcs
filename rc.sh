@@ -326,6 +326,7 @@ alias py='python'
 alias ipy='ipython'
 alias venv='python -m venv'
 
+alias tmxu='tmux'
 alias tmuxa='tmux a'
 
 alias cぇあr='clear'
