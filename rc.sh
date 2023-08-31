@@ -389,6 +389,7 @@ alias gho='gh repo view -w'
 alias sudo='sudo '
 
 alias editrc='vim ~/dev/rcs/rc.sh'
+alias editcustom='vim ~/custom.sh'
 alias sourcerc='source ~/.bashrc'
 
 if [ "$(pwd)" == "${HOME}" ]; then
