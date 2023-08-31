@@ -116,6 +116,19 @@ function c() {
     fi
 }
 
+function copy() {
+    if [ "$(uname)" == "Linux" ]; then
+        xsel -ip
+        xsel -op | xsel -ib
+    elif [ "$(uname)" == "Darwin" ]; then
+        pbcopy
+    fi
+}
+
+function jumphere() {
+    echo "cd $(pwd)" | copy
+}
+
 function gocd() {
     GO_SRC="${GOPATH}/src"
     CHOSEN=$(find ${GO_SRC} -mindepth 3 -maxdepth 3 -type d | sed -E "s|${GO_SRC}/||g" | ag -v "\.[^/]+$" | peco)
@@ -341,7 +354,6 @@ alias tむxあ='tmux a'
 alias えぃt='exit'
 alias おペン。='open .'
 
-alias copy='xsel -ip && xsel -op | xsel -ib'
 alias du1='du -hd 1'
 alias umount='sudo umount'
 alias ha='history | ag -o '\''^\s+[0-9]+\s+\K.*'\'' | uniq | tail -r | peco --layout=bottom-up | pbcopy'
