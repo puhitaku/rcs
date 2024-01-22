@@ -1,0 +1,62 @@
+#!/bin/bash
+set -ue
+
+QUERY=""
+OUTPUT_UUID=0
+QUIET=0
+
+function must_exist() {
+    for cmd in $@; do
+        if ! which $cmd > /dev/null; then
+            echo "Fatal: please install $cmd."
+            exit 1
+        fi
+    done
+}
+
+must_exist jq peco balena
+
+while getopts "huq" OPT; do
+    case "$OPT" in
+    h)
+        echo "Usage:   balenapick [-huq] [FILTER_QUERY]"
+        echo "Example: balenapick               # Pick a device with peco"
+        echo "Example: balenapick device_foo    # Outputs a JSON line that describes the device_foo"
+        echo "Example: balenapick -u device_bar # Outputs the UUID of the device_bar"
+        echo ""
+        echo "Flags:"
+        echo " -h: show this help"
+        echo " -u: print the UUID instead of a JSON object"
+        echo " -q: quiet extra info printed to stderr"
+        exit 0
+        ;;
+    u)
+        OUTPUT_UUID=1
+        ;;
+    q)
+        QUIET=1
+        ;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+if [ $# -ge 1 ]; then
+    QUERY=$1
+fi
+
+PICKED=$(balena devices -j | jq -c '.[] | {device_name, is_online, uuid}' | peco --query "$QUERY" --select-1)
+
+if [ "$PICKED" == "" ]; then
+    exit 1
+fi
+
+if [ $QUIET -ne 1 ]; then
+    echo "Picked device: $(echo $PICKED | jq -r '.device_name')" 1>&2
+fi
+
+if [ $OUTPUT_UUID -eq 1 ]; then
+    echo $PICKED | jq -r '.uuid'
+else
+    echo $PICKED
+fi

@@ -1,0 +1,27 @@
+#!/bin/bash
+set -ue
+
+if [ $# -lt 1 ]; then
+  echo "Usage: [FILTER=query] $0 PORTS ..."
+  echo "Example: $0 1234"
+  echo "Example: FILTER=foo $0 1883"
+  exit 1
+fi
+
+PICKED=$(balenapick $FILTER)
+if [ "$PICKED" == "" ]; then
+    exit 1
+fi
+
+NAME=$(echo $PICKED | jq -r '.device_name')
+UUID=$(echo $PICKED | jq -r '.uuid')
+PORTS=""
+
+echo -n "Establishing a tunnel to $NAME (UUID: $UUID), port "
+for p in "$@"; do
+    PORTS="$PORTS-p $p:$p "
+    echo -n "$p "
+done
+echo
+
+balena tunnel $UUID $PORTS
