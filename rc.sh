@@ -126,7 +126,7 @@ function copy() {
 }
 
 function jh() {
-    echo "cd $(pwd)" | copy
+    echo -n "cd $(pwd)" | copy
 }
 
 function gocd() {
