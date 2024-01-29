@@ -125,7 +125,7 @@ function copy() {
     fi
 }
 
-function jumphere() {
+function jh() {
     echo "cd $(pwd)" | copy
 }
 
