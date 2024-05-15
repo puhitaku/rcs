@@ -31,7 +31,7 @@ ln -s $(pwd)/.vimrc ~/.vimrc
 git submodule update --init  # pull vim packages
 ln -s $(pwd)/vim ~/.vim
 
-ln -s $(pwd)/.gitconfig ~/.gitconfig
+ln -s $(pwd)/.gitconfig ~/.gitconfig || true  # gitconfig may already exist
 ln -s $(pwd)/.inputrc ~/.inputrc
 ln -s $(pwd)/.minirc.dfl ~/.minirc.dfl
 
