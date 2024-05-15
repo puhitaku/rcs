@@ -11,7 +11,7 @@ Bootstrap
 #!/bin/sh
 
 cd
-brew install git ghq wget bash  # On Mac
+brew install git ghq wget bash peco ag  # On Mac
 apt install git
 wget https://raw.githubusercontent.com/puhitaku/rcs/master/.gitconfig
 mkdir ~/dev
