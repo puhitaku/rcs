@@ -44,3 +44,4 @@ ln -s $(pwd)/peco_config.json ~/.config/peco/config.json
 mkdir -p ~/.ipython/profile_default
 ln -s $(pwd)/ipython_config.py ~/.ipython/profile_default/ipython_config.py
 
+ln -s $(pwd)/.tigrc ~/.tigrc
