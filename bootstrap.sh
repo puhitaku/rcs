@@ -45,3 +45,18 @@ mkdir -p ~/.ipython/profile_default
 ln -s $(pwd)/ipython_config.py ~/.ipython/profile_default/ipython_config.py
 
 ln -s $(pwd)/.tigrc ~/.tigrc
+
+
+# macOS-only configurations
+if [ $mac ]; then
+    # Show nothing on the desktop
+    defaults write com.apple.finder CreateDesktop -boolean false
+    killall Finder
+
+    # Screenshot shadow
+    defaults write com.apple.screencapture disable-shadow -boolean true
+    killall SystemUIServer
+
+    # Don't show a balloon on long press
+    defaults write -g ApplePressAndHoldEnabled -bool false
+fi
