@@ -8,6 +8,7 @@ if [ $# -lt 1 ]; then
   exit 1
 fi
 
+FILTER=${FILTER:-}
 PICKED=$(balenapick $FILTER)
 if [ "$PICKED" == "" ]; then
     exit 1
