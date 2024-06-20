@@ -19,3 +19,6 @@
 [submodule "scripts/vendor/click"]
 	path = scripts/vendor/click
 	url = https://github.com/pallets/click.git
+[submodule "vim/pack/themes/start/darcula"]
+	path = vim/pack/themes/start/darcula
+	url = https://github.com/puhitaku/darcula.git

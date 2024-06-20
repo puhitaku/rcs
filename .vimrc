@@ -13,6 +13,9 @@ set ruler
 set smartindent
 set shiftwidth=4
 set tabstop=4
+set background=dark
+set termguicolors
+colorscheme darcula
 
 set nobackup
 set noswapfile
