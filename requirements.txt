@@ -3,3 +3,4 @@ click
 jupyter
 pip
 requests
+nodeenv
