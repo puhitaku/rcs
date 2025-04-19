@@ -354,6 +354,7 @@ alias tむx='tmux'
 alias tむxあ='tmux a'
 alias えぃt='exit'
 alias おペン。='open .'
+alias まけ='make'
 
 alias du1='du -hd 1'
 alias umount='sudo umount'
