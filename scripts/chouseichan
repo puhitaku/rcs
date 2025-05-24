@@ -14,6 +14,7 @@ Chousei-chan: 調整さんの日付一覧を生成するスクリプト
 
 import sys
 from datetime import datetime, timedelta
+from enum import Enum
 
 try:
     import click
@@ -38,11 +39,24 @@ def err(*args, **kwargs):
     help='Specify a range of date',
 )
 @click.option(
+    '-R',
+    '--date-range-dow',
+    nargs=3,
+    multiple=True,
+    type=click.Tuple([click.DateTime(), click.DateTime(), str]),
+    help='Specify a range of date and DOW. Only specified DOW will be picked.',
+)
+@click.option(
     '-d', '--date', multiple=True, type=click.DateTime(formats=['%Y-%m-%d']), help='Specify a date'
 )
 @click.option('-t', '--time', multiple=True, help='Specify a starting time')
 @click.command()
-def main(date: list[datetime], date_range: list[tuple[datetime, datetime]], time: list[str]):
+def main(
+    date: list[datetime],
+    date_range: list[tuple[datetime, datetime]],
+    date_range_dow: list[tuple[datetime, datetime, str]],
+    time: list[str],
+):
     """Chousei-chan, an assistant of Chousei-san
 
     \b
@@ -70,10 +84,29 @@ def main(date: list[datetime], date_range: list[tuple[datetime, datetime]], time
     2021/8/8(日) B
     2021/8/10(火) A
     2021/8/10(火) B
+
+    \b
+    Example 3: chouseichan -R 2025-06-01 2025-06-30 FrSaSu
+    (Note: the DOW specifier is namely: Su, Mo, Tu, We, Th, Fr, Sa)
+
+    \b
+    2025/6/1(日)
+    2025/6/6(金)
+    2025/6/7(土)
+    2025/6/8(日)
+    2025/6/13(金)
+    2025/6/14(土)
+    2025/6/15(日)
+    2025/6/20(金)
+    2025/6/21(土)
+    2025/6/22(日)
+    2025/6/27(金)
+    2025/6/28(土)
+    2025/6/29(日)
     """
 
-    if len(date) == 0 and len(date_range) == 0:
-        err('Error: neither -d nor -t are specified')
+    if len(date) == 0 and len(date_range) == 0 and len(date_range_dow) == 0:
+        err('Error: no date or range specified')
         err()
         with click.Context(main) as ctx:
             err(main.get_help(ctx))
@@ -92,6 +125,18 @@ def main(date: list[datetime], date_range: list[tuple[datetime, datetime]], time
         delta = end - start
         for n in range(delta.days + 1):
             dates.append(start + timedelta(days=1) * n)
+
+    for r in date_range_dow:
+        start, end, dow = r[0], r[1], r[2]
+        if start >= end:
+            raise ValueError('The end of a range must be greater than the beginning')
+
+        delta = end - start
+        dow_enum = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
+        for n in range(delta.days + 1):
+            d = start + timedelta(days=1) * n
+            if dow_enum[d.weekday()] in dow:
+                dates.append(start + timedelta(days=1) * n)
 
     dates.sort()
 
