@@ -45,7 +45,7 @@ if [ $# -ge 1 ]; then
     QUERY=$1
 fi
 
-PICKED=$(balena devices -j | jq -c '.[] | {device_name, is_online, uuid}' | peco --query "$QUERY" --select-1)
+PICKED=$(balena device list -j | jq -c '.[] | {device_name, is_online, uuid}' | peco --query "$QUERY" --select-1)
 
 if [ "$PICKED" == "" ]; then
     exit 1

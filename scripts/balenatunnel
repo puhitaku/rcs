@@ -20,7 +20,7 @@ PORTS=""
 
 echo -n "Establishing a tunnel to $NAME (UUID: $UUID), port "
 for p in "$@"; do
-    PORTS="$PORTS-p $p:$p "
+    PORTS="$PORTS-p $p:127.0.0.1 "
     echo -n "$p "
 done
 echo
