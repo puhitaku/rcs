@@ -1,0 +1,66 @@
+# Focus window
+alt - z : yabai -m window --focus recent
+alt - h : yabai -m window --focus west
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - l : yabai -m window --focus east
+
+# Warp window
+shift + cmd - h : yabai -m window --warp west
+shift + cmd - j : yabai -m window --warp south
+shift + cmd - k : yabai -m window --warp north
+shift + cmd - l : yabai -m window --warp east
+
+# Swap window
+shift + alt - z : yabai -m window --swap recent
+shift + alt - h : yabai -m window --swap west
+shift + alt - j : yabai -m window --swap south
+shift + alt - k : yabai -m window --swap north
+shift + alt - l : yabai -m window --swap east
+
+# Mirror tree x- and y-axis
+shift + alt - x : yabai -m space --mirror x-axis
+shift + alt - y : yabai -m space --mirror y-axis
+
+# Manipulate window size
+shift + alt - a : yabai -m window --resize left:20:0
+shift + alt - s : yabai -m window --resize bottom:0:-20
+shift + alt - w : yabai -m window --resize top:0:20
+shift + alt - d : yabai -m window --resize right:-20:0
+
+# Rotate tree
+alt - r : yabai -m space --rotate 90
+
+# Toggle window fullscreen zoom
+alt - f : yabai -m window --toggle zoom-fullscreen
+
+# Toggle window native fullscreen
+shift + alt - f : yabai -m window --toggle native-fullscreen
+
+# Toggle window split type
+alt - e : yabai -m window --toggle split
+
+# Auto balance
+alt - space : yabai -m space --balance
+
+# Float / unfloat window and restore position
+alt - t : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2
+
+# Switch to left space
+# alt - right : yabai -m space --focus next || yabai -m space --focus first
+alt - right : yabai -m space --focus next
+
+# Wwitch to right space
+# alt - left : yabai -m space --focus prev || yabai -m space --focus last
+alt - left : yabai -m space --focus prev
+
+# New space with the active app
+alt - c : yabai -m space --create && \
+          index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
+          yabai -m window --space "${index}" && \
+          yabai -m space --focus "${index}"
+
+alt - x : yabai -m space --destroy
+
+# Open Kitty
+# cmd - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance

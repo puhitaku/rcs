@@ -1,0 +1,88 @@
+#!/usr/bin/env sh
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
+
+yabai -m config mouse_follows_focus          off
+yabai -m config focus_follows_mouse          off
+yabai -m config window_origin_display        default
+yabai -m config window_placement             second_child
+yabai -m config window_shadow                float
+yabai -m config window_opacity               off
+yabai -m config active_window_opacity        1.0
+yabai -m config normal_window_opacity        0.9
+yabai -m config split_ratio                  0.50
+yabai -m config auto_balance                 off
+yabai -m config mouse_modifier               fn
+yabai -m config mouse_action1                move
+yabai -m config mouse_action2                resize
+yabai -m config mouse_drop_action            swap
+yabai -m config layout                       bsp
+
+# With borders
+# yabai -m config top_padding    2
+# yabai -m config bottom_padding 3
+# yabai -m config left_padding   3
+# yabai -m config right_padding  3
+# yabai -m config window_gap     4
+ borders \
+     active_color=0xffffccd1 \
+     inactive_color=0x00000000 \
+     width=6.0 \
+     style=round \
+     blacklist='Autodesk Fusion' &
+
+# Without borders
+yabai -m config top_padding    8
+yabai -m config bottom_padding 8
+yabai -m config left_padding   8
+yabai -m config right_padding  8
+yabai -m config window_gap     8
+
+
+#############
+# Blacklist #
+#############
+
+# Entire app
+unmanaged='^システム設定$ ^IriunWebcam$ ^Ice$ ^LINE$ ^1Password$ ^VLC$'
+for app in ${unmanaged}; do
+    yabai -m rule --add app="${app}" manage=off
+    echo $app
+done
+
+# JetBrains
+# https://github.com/koekeishiya/yabai/issues/194#issuecomment-1924547724
+yabai -m rule --add app="^GoLand$" manage=off
+yabai -m rule --add app="^GoLand$" title="( – )" manage=on
+
+# Adobe
+yabai -m rule --add app="^Adobe.*$" \
+    role="AXLayoutArea" \
+    subrole="AXFloatingWindow" \
+    manage=off
+
+yabai -m rule --add app="^Adobe.*$" opacity=1.0
+
+# Finder
+
+unmanaged_windows='^コピー$'
+for window in ${unmanaged_windows}; do
+    yabai -m rule --add app="^Finder$" title="${window}" manage=off
+    echo $app
+done
+
+yabai -m rule --apply
+
+
+##########
+# Signal #
+##########
+
+# Show the current space with SwiftBar
+yabai -m signal --add event=space_changed action='yabaiutil sb-yabai-spaces'
+
+# Focus the first window after switching a space
+# Ref: https://github.com/koekeishiya/yabai/issues/719
+yabai -m signal --add event=space_changed action="sleep 0.1 && yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
+
+echo "yabai configuration loaded.."
