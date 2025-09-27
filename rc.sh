@@ -27,6 +27,7 @@ export PATH=$PATH:$HOME/.local/kitty.app/bin
 export PATH=$PATH:$RCS_DIR/scripts
 export PATH=$PATH:$RCS_DIR/scripts_ignore
 export PATH=$PATH:$HOME/dev/mtplvcap
+source $HOME/.local/bin/env # uv
 
 export PYENV_ROOT="$HOME/.pyenv"
 
