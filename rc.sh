@@ -1,6 +1,6 @@
 PS1=" \[\e[32m\]\W\[\e[0m\] \$ "
 bash -c 'echo -en "\033]0;$(echo $HOSTNAME | sed "s/\.local//g")\007"'
-RCS_DIR="${HOME}/dev/rcs"
+RCS_DIR="${HOME}/dev/github.com/puhitaku/rcs"
 
 if [ "$(uname)" == "Linux" ]; then
     export DISPLAY=:0
@@ -390,7 +390,7 @@ alias gho='gh repo view -w'
 # enable alias expansion for sudo
 alias sudo='sudo '
 
-alias editrc='vim ~/dev/rcs/rc.sh'
+alias editrc="vim ${RCS_DIR}/rc.sh"
 alias editcustom='vim ~/custom.sh'
 alias sourcerc='source ~/.bashrc'
 
