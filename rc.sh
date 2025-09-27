@@ -364,6 +364,7 @@ alias umount='sudo umount'
 alias ha='history | ag -o '\''^\s+[0-9]+\s+\K.*'\'' | uniq | tail -r | peco --layout=bottom-up | pbcopy'
 alias has='history | ag -o '\''^\s+[0-9]+\s+\K.*'\'' | sort | uniq | tail -r | peco --layout=bottom-up | pbcopy'
 alias minicom='minicom -c on'
+alias htopr='htop -d 5'
 
 alias nowjst='date +"%Y-%m-%d %A %H:%M:%S"'
 alias nowutc='date -u +"%Y-%m-%dT%H:%M:%SZ"'
