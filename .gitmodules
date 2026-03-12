@@ -19,3 +19,6 @@
 [submodule "vim/pack/themes/start/darcula"]
 	path = vim/pack/themes/start/darcula
 	url = https://github.com/puhitaku/darcula.git
+[submodule "vim/pack/syntax/start/python-syntax"]
+	path = vim/pack/syntax/start/python-syntax
+	url = https://github.com/wmvanvliet/python-syntax.git
