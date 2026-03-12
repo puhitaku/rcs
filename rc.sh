@@ -41,6 +41,7 @@ export GOPATH="${HOME}/dev/go"
 export PATH="$PATH:$GOPATH/bin"
 export PATH=$PATH:/usr/lib/go-1.1?/bin
 export PATH=$PATH:$HOME/dev/goroot/bin
+export EDITOR="vim"
 
 export LC_ALL="en_US.UTF-8"
 
