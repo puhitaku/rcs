@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Usage: ./webpify file1.jpg file2.jpg ...
+
+i=1
+
+for full in "$@"; do
+    file=$(basename ${full})
+	echo "Converting ${file} (${i}/$#)"
+    magick -define webp:method=6 -quality 90 "$full" "${file%.*}.webp"
+	i=$((i +1))
+done
+
