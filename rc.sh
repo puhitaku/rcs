@@ -19,6 +19,11 @@ if [ "${SSH_CLIENT}" != "" ] || [ "${SSH_TTY}" != "" ]; then
     unset DISPLAY
 fi
 
+# uv
+if [ -f ${HOME}/.local/bin/env ]; then
+    . ${HOME}/.local/bin/env
+fi
+
 export PATH=$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 export PATH=$PATH:/sbin:/usr/sbin
 export PATH=$PATH:$HOME/.poetry/bin
@@ -27,7 +32,6 @@ export PATH=$PATH:$HOME/.local/kitty.app/bin
 export PATH=$PATH:$RCS_DIR/scripts
 export PATH=$PATH:$RCS_DIR/scripts_ignore
 export PATH=$PATH:$HOME/dev/mtplvcap
-source $HOME/.local/bin/env # uv
 
 export PYENV_ROOT="$HOME/.pyenv"
 
