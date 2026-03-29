@@ -22,3 +22,6 @@
 [submodule "vim/pack/syntax/start/python-syntax"]
 	path = vim/pack/syntax/start/python-syntax
 	url = https://github.com/wmvanvliet/python-syntax.git
+[submodule "vim/pack/util/vim-fern"]
+	path = vim/pack/util/start/vim-fern
+	url = git@github.com:lambdalisue/vim-fern.git

@@ -1,5 +1,5 @@
 {
-    "Prompta": "Q>",
+    "Prompt": "Q>",
     "InitialFilter": "Fuzzy",
     "FuzzyLongestSort": true,
     "Keymap": {
