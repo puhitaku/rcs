@@ -31,5 +31,5 @@ yabai -m signal --add event=space_changed action='yabaiutil sb-yabai-spaces'
 # Ref: https://github.com/koekeishiya/yabai/issues/719
 yabai -m signal --add event=space_changed action="sleep 0.1 && yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
 
-borders active_color=0xffffccd1 inactive_color=0x00000000 width=6.0 style=round blacklist='Autodesk Fusion' &
+# borders active_color=0xffffccd1 inactive_color=0x00000000 width=6.0 style=round blacklist='Autodesk Fusion' &
 echo "yabai configuration loaded.."
