@@ -2,3 +2,4 @@ set main-view-author-maxwidth = 11
 set main-view-date = custom
 set main-view-date-local = true
 set main-view-date-format = "%Y-%m-%d %H:%M"
+bind generic Y !sh -c "echo %(commit) | pbcopy && echo Copied %(commit) to clipboard"
